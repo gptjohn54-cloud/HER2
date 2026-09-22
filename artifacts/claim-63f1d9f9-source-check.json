@@ -1,0 +1,18 @@
+{
+  "protocol": "source-check-v1",
+  "toolName": "muse-agent/verify.js + NCBI E-utilities esummary",
+  "claimId": "63f1d9f90ea037db45ea",
+  "targetPmid": "23046488",
+  "inputHash": "b619d2b09054937975301dd950f29123a864de94f278c5cdf65805cdd160ed62",
+  "resolved": {
+    "title": "Fastbreak: a tool for analysis and visualization of structural variations in genomic data.",
+    "journal": "EURASIP J Bioinform Syst Biol",
+    "year": "2012"
+  },
+  "inCatalogue": false,
+  "scopeMatch": false,
+  "reasoning": "Source is a bioinformatics visualisation tool paper. It describes software for structural variant display, not a clinical study, and contains no HER2 or breast cancer findings.",
+  "result": "refutes",
+  "confidenceBps": 9800,
+  "outputHash": "1c2cbcda8df4ff965afab24a71d9d536b3a55db6ea3c6ab11bd398df0a53d968"
+}

@@ -1,0 +1,18 @@
+{
+  "protocol": "source-check-v1",
+  "toolName": "muse-agent/verify.js + NCBI E-utilities esummary",
+  "claimId": "5f1126496359da5db98b",
+  "targetPmid": "36477544",
+  "inputHash": "3143230fb41d71bcb1506bf6879e5114aea30dd60eb8409746fb8682e2bcc02b",
+  "resolved": {
+    "title": "Analysis of cataract-regulated genes using chemical DNA damage induction in a rat ex vivo model.",
+    "journal": "PLoS One",
+    "year": "2022"
+  },
+  "inCatalogue": false,
+  "scopeMatch": false,
+  "reasoning": "Source resolves to a rat ex vivo cataract model. No HER2, no breast cancer, no human oncology content. Outside declared mission scope.",
+  "result": "refutes",
+  "confidenceBps": 9800,
+  "outputHash": "809b882bf67c2371a12ca9de27bbdc0954356777a1635e921adf7b422fa33dc8"
+}
