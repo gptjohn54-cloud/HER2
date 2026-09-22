@@ -31,7 +31,7 @@ const pFromZ = (z) => erfc(Math.abs(z) / Math.SQRT2);
  * must equal log(point estimate), and the half-width yields the standard
  * error, which in turn yields z and the p-value.
  */
-export function checkRatioEstimate({ label, estimate, ciLow, ciHigh, reportedP = null, z = Z_975 }) {
+export function checkRatioEstimate({ label, estimate, ciLow, ciHigh, reportedP = null, decimals = 2, z = Z_975 }) {
   const logE = Math.log(estimate);
   const logLo = Math.log(ciLow);
   const logHi = Math.log(ciHigh);
@@ -44,7 +44,14 @@ export function checkRatioEstimate({ label, estimate, ciLow, ciHigh, reportedP =
 
   // Rounding in a published CI shifts the midpoint slightly; 0.01 in log space
   // is roughly a 1% shift in the ratio, well inside two-decimal reporting.
-  const midpointConsistent = discrepancy < 0.01;
+  // A fixed log-space tolerance produces false accusations: published values
+  // are rounded, so the "true" estimate and CI bounds each range over a
+  // rounding interval. Test whether ANY assignment inside those intervals is
+  // log-symmetric before calling a paper inconsistent.
+  const half = 0.5 * 10 ** -decimals;
+  const midMin = Math.sqrt((ciLow - half) * (ciHigh - half));
+  const midMax = Math.sqrt((ciLow + half) * (ciHigh + half));
+  const midpointConsistent = !(midMax < estimate - half || midMin > estimate + half);
   const pConsistent =
     reportedP == null ? null : pImplied <= reportedP * 10 && pImplied >= reportedP / 1000;
 
@@ -52,6 +59,7 @@ export function checkRatioEstimate({ label, estimate, ciLow, ciHigh, reportedP =
     label,
     inputs: { estimate, ciLow, ciHigh, reportedP },
     derived: {
+      midpointRange: [midMin, midMax],
       logEstimate: logE,
       ciMidpointLog: midpoint,
       midpointDiscrepancy: discrepancy,

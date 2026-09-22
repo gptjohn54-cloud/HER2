@@ -38,13 +38,20 @@ export async function search(term, { retmax = 40, sort = 'date' } = {}) {
 }
 
 /** Returns the raw abstract text exactly as served, plus its SHA-256. */
-export async function fetchAbstract(pmid) {
-  await throttle();
+export async function fetchAbstract(pmid, { retries = 4 } = {}) {
   const params = common(new URLSearchParams({ ...FETCH_SPEC, id: String(pmid) }));
-  const res = await fetch(`${EUTILS}/efetch.fcgi?${params}`, {
-    signal: AbortSignal.timeout(25_000),
-  });
-  if (!res.ok) throw new Error(`efetch ${pmid} HTTP ${res.status}`);
+  let res;
+  for (let attempt = 0; ; attempt++) {
+    // NCBI throttles hard on bursts; back off rather than dropping the source.
+    await throttle(attempt === 0 ? 400 : 1200 * 2 ** (attempt - 1));
+    res = await fetch(`${EUTILS}/efetch.fcgi?${params}`, {
+      signal: AbortSignal.timeout(25_000),
+    });
+    if (res.ok) break;
+    if (res.status !== 429 || attempt >= retries) {
+      throw new Error(`efetch ${pmid} HTTP ${res.status}`);
+    }
+  }
   const text = await res.text();
   if (!text.includes(`PMID: ${pmid}`)) {
     throw new Error(`efetch ${pmid} returned no matching record`);
