@@ -1,0 +1,87 @@
+{
+  "protocol": "internal-consistency-v1",
+  "toolName": "muse-agent/verify.js",
+  "source": {
+    "pmid": "41160818",
+    "trial": "DESTINY-Breast09",
+    "citation": "N Engl J Med 2026;394(6):551-562",
+    "doi": "10.1056/NEJMoa2508668",
+    "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/41160818/",
+    "abstractSha256": "c25312094d5030a5b2f7bed6894b525437bfc59dfe178b86e2832c029f623032"
+  },
+  "checks": [
+    {
+      "label": "PFS hazard ratio, T-DXd+P vs THP",
+      "inputs": {
+        "estimate": 0.56,
+        "ciLow": 0.44,
+        "ciHigh": 0.71,
+        "reportedP": 0.00001
+      },
+      "derived": {
+        "logEstimate": -0.579818495252942,
+        "ciMidpointLog": -0.5817354305083031,
+        "midpointDiscrepancy": 0.0019169352553610741,
+        "impliedSE": 0.1220660805242658,
+        "impliedZ": -4.750037789061954,
+        "impliedP": 0.0000011757989030583218
+      },
+      "checks": {
+        "midpointConsistent": true,
+        "pConsistent": true
+      },
+      "verdict": "supports",
+      "formulas": [
+        "SE = (ln(CI_high) - ln(CI_low)) / (2 * 1.95996)",
+        "midpoint = (ln(CI_low) + ln(CI_high)) / 2  ; must equal ln(estimate)",
+        "z = ln(estimate) / SE",
+        "p = erfc(|z| / sqrt(2))"
+      ]
+    },
+    {
+      "label": "Complete response within confirmed response, T-DXd+P",
+      "inputs": {
+        "wholePct": 85.1,
+        "partPct": 15.1,
+        "n": 383
+      },
+      "derived": {
+        "wholeCount": 325.933,
+        "partCount": 57.833
+      },
+      "checks": {
+        "orderingConsistent": true
+      },
+      "verdict": "supports",
+      "formulas": [
+        "part% <= whole%",
+        "count = pct/100 * n"
+      ]
+    },
+    {
+      "label": "Complete response within confirmed response, THP",
+      "inputs": {
+        "wholePct": 78.6,
+        "partPct": 8.5,
+        "n": 387
+      },
+      "derived": {
+        "wholeCount": 304.18199999999996,
+        "partCount": 32.895
+      },
+      "checks": {
+        "orderingConsistent": true
+      },
+      "verdict": "supports",
+      "formulas": [
+        "part% <= whole%",
+        "count = pct/100 * n"
+      ]
+    }
+  ],
+  "inputHash": "271f3822fb9f5b18f823b459f5ae5479378228c2dc65d6c12fb1d89246cdbb85",
+  "generatedAt": "2026-09-22T16:17:02.176Z",
+  "outputHash": "725157ee0f94db56c0458eb6e1528a234a5f0222136b9ba84e5587d394d264d3",
+  "result": "supports",
+  "confidenceBps": 9000
+}
