@@ -1,0 +1,13 @@
+{
+  "name": "muse-agent",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Research agent for the MUSE evidence protocol (musesolvescancer.com)",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "plan": "node src/main.js --dry-run",
+    "run": "node src/main.js",
+    "status": "node src/main.js --status"
+  }
+}
