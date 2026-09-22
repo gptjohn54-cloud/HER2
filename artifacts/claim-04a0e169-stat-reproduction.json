@@ -1,0 +1,21 @@
+{
+  "protocol": "statistical-reproduction-v1",
+  "toolName": "muse-agent/verify.js + NCBI E-utilities efetch",
+  "claimId": "04a0e1695e9f061cb0c986d18748791c44fce43842dd64bda9ba192e07ee3a8b",
+  "targetPmid": "37980647",
+  "sourceSha256": "445e32aef7bfe1b6ea44e8449d8502efd76257e526f29a6a4ceda05b5831d9bb",
+  "inputHash": "473caba8ce9a5d7e9f72ccd53174a0fc332664a7e6f706fadcfc46de90f44b9e",
+  "claimUnderTest": "The abstract prints no odds ratio, no confidence interval, no score cutoff, and no count of resistant patients.",
+  "searched": {
+    "oddsRatio": "absent",
+    "confidenceInterval": "absent",
+    "cutoff": "absent",
+    "hazardRatio": "absent",
+    "pValue": "present (P=0.093, lymph node status correlation)"
+  },
+  "reproducible": false,
+  "reasoning": "Regex scan of the efetch abstract text for odds ratio, confidence interval, cutoff/threshold and hazard ratio returns no match. Only an unadjusted p-value appears. No effect estimate is published, so no reproduction is possible; the claim that these are absent is itself confirmed.",
+  "result": "supports",
+  "confidenceBps": 9500,
+  "outputHash": "4b2e985e66a83cfde5c78f188be27f02bb203bbc994834ec34f4e3b8b1489d6c"
+}
